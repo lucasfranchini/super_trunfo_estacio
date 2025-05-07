@@ -12,6 +12,7 @@ typedef struct{
     int pontos_turisticos;
     float densidade_populacional;
     float PIB_per_capita;
+    float super_poder;
 } Carta;
 
 /**
@@ -50,6 +51,8 @@ Carta inicializarCarta(int i) {
     carta.densidade_populacional = carta.populacao / carta.area;
     carta.PIB_per_capita = (carta.PIB /carta.populacao) * 1000000000;
 
+    carta.super_poder = carta.populacao + carta.area + carta.PIB + carta.pontos_turisticos + 1 / carta.densidade_populacional + carta.PIB_per_capita;
+
     return carta;
     
 }
@@ -66,11 +69,55 @@ void imprimirCarta(Carta carta, int numeroCarta) {
     printf("Codigo: %s\n", carta.codigo);
     printf("Estado: %c\n", carta.estado);
     printf("Populacao: %d\n", carta.populacao);
-    printf("Area: %.2f\n", carta.area);
-    printf("PIB: %.2f\n", carta.PIB);
+    printf("Area: %.2f km²\n", carta.area);
+    printf("PIB: %.2f bilhões de reais\n", carta.PIB);
     printf("Número de Pontos turisticos: %d\n", carta.pontos_turisticos);
-    printf("Densidade Populacional: %.2f\n",carta.densidade_populacional);
-    printf("PIB per Capita: %.2f\n", carta.PIB_per_capita);
+    printf("Densidade Populacional: %.2f hab/km²\n",carta.densidade_populacional);
+    printf("PIB per Capita: %.2f reais\n", carta.PIB_per_capita);
+    printf("Super Poder: %.2f\n", carta.super_poder);
+}
+
+
+/**
+ * Compara as informações de duas cartas e imprime na saída padrão as comparações
+ * realizadas.
+ * 
+ * A função compara as informações de duas cartas e imprime na saída padrão as
+ * comparações realizadas. A comparação é realizada em sete critérios:
+ * - População
+ * - Area
+ * - PIB
+ * - Pontos Turisticos
+ * - Densidade Populacional
+ * - PIB per Capita
+ * - Super Poder
+ * 
+ * Para cada critério, a função imprime na saída padrão qual carta venceu e qual foi
+ * o valor que determinou a vitória.
+ */
+void calcularCartaVencedora(Carta primeiraCarta, Carta segundaCarta) {
+    printf("\nComparação de Cartas:\n");
+    
+    int populacao = primeiraCarta.populacao > segundaCarta.populacao;
+    printf("População: Carta %d venceu (%d)\n", populacao ? 1 : 2, populacao);
+
+    int area = primeiraCarta.area > segundaCarta.area;
+    printf("Area: Carta %d venceu (%d)\n", area ? 1 : 2, area);
+
+    int PIB = primeiraCarta.PIB > segundaCarta.PIB;
+    printf("PIB: Carta %d venceu (%d)\n", PIB ? 1 : 2, PIB);
+
+    int pontos_turisticos = primeiraCarta.pontos_turisticos > segundaCarta.pontos_turisticos;
+    printf("Pontos Turisticos: Carta %d venceu (%d)\n", pontos_turisticos ? 1 : 2, pontos_turisticos);
+
+    int densidade_populacional = primeiraCarta.densidade_populacional < segundaCarta.densidade_populacional;
+    printf("Densidade Populacional: Carta %d venceu (%d)\n", densidade_populacional ? 1 : 2, densidade_populacional);
+
+    int PIB_per_capita = primeiraCarta.PIB_per_capita > segundaCarta.PIB_per_capita;
+    printf("PIB per Capita: Carta %d venceu (%d)\n", PIB_per_capita ? 1 : 2, PIB_per_capita);
+
+    int super_poder = primeiraCarta.super_poder > segundaCarta.super_poder;
+    printf("Super Poder: Carta %d venceu (%d)\n", super_poder ? 1 : 2, super_poder);
 }
 
 int main() {
@@ -81,5 +128,8 @@ int main() {
     imprimirCarta(primeiraCarta,1);
     imprimirCarta(segundaCarta,2);
 
+    calcularCartaVencedora(primeiraCarta, segundaCarta);
+
     return 0;
 }
+
