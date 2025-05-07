@@ -39,6 +39,12 @@ Carta inicializarCarta(int i) {
     printf("digite a area da carta %d:", i);
     scanf("%f", &carta.area);
 
+    printf("digite o PIB em bilhões de reais da carta %d:", i);
+    scanf("%f", &carta.PIB);
+
+    printf("digite os pontos turisticos da carta %d:", i);
+    scanf("%d%*c", &carta.pontos_turisticos);
+
     return carta;
     
 }
@@ -58,6 +64,8 @@ void imprimirCarta(Carta carta, int numeroCarta) {
     printf("Area: %.2f\n", carta.area);
     printf("PIB: %.2f\n", carta.PIB);
     printf("Número de Pontos turisticos: %d\n", carta.pontos_turisticos);
+    printf("Densidade Populacional: %.2f\n",carta.populacao / carta.area);
+    printf("PIB per Capita: %.2f\n", (carta.PIB /carta.populacao) * 1000000000);
 }
 
 int main() {
